@@ -1,0 +1,17 @@
+﻿$def with (signlist)
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>連署資料</title>
+</head>
+
+<body id="home">
+    <ul>
+        $for r in signlist:
+        <li><a href="${r.url}">${r.text}</a></li>
+    </ul>
+</body>
+</html>
+
