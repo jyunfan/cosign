@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 #std
 import logging
 from datetime import datetime,date
@@ -7,7 +8,6 @@ from google.appengine.api import taskqueue, memcache
 from google.appengine.ext import db
 from google.appengine.ext.db import stats
 #3rd
-from BeautifulSoup import BeautifulSoup
 import web #http://webpy.org/
 from web import form
 #local
@@ -20,15 +20,27 @@ urls = (
 
 class download:
     def GET(self):
-        signlist = db.Query(Sign).order('count')
-        render = web.template.render('templates')
-        web.header('Content-type','text/csv; charset=BIG5')
+        """ Generate csv file """
+
+        fields = ('name', 'phone')
+        tmpsignlist = db.Query(Sign).order('count')
+
+        # Generate csv content
+        #   Special case: add double quote to phone numbers to preserve
+        #   leading zeros in phone number
+        signlist = [u'姓名,出生年月日,地址,電話']
+        for s in tmpsignlist:
+            signlist.append('%s,%s,%s,="%s"' % (s.name, s.birth, s.addr, s.phone))
+        csv = "\n".join(signlist)
+
+        web.header('Content-type','text/csv; charset=utf-8')
         web.header('Content-Disposition', 'filename=cosign.csv')
-        return codecs.BOM_UTF8 + str(render.signlist(signlist))
+
+        # Add BOM for Windows users
+        return codecs.BOM_UTF8 + csv.encode("utf-8")
 
 def main():
     web.application(urls, globals()).cgirun()
 
 if __name__ == '__main__':
     main()
-
