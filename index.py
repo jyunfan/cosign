@@ -25,7 +25,7 @@ myform = form.Form(
 
 class index:
     def GET(self):
-        web.seeother('/static/index.html')
+        web.seeother('/static/chen.html')
 
     def POST(self):
         i = web.input()
