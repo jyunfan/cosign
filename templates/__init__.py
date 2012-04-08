@@ -2,6 +2,29 @@ from web.template import CompiledTemplate, ForLoop, TemplateResult
 
 
 # coding: utf-8
+def error():
+    __lineoffset__ = -5
+    loop = ForLoop()
+    self = TemplateResult(); extend_ = self.extend
+    extend_([u'<!DOCTYPE HTML>\n'])
+    extend_([u'<html>\n'])
+    extend_([u'\n'])
+    extend_([u'<head>\n'])
+    extend_([u'    <title>\u611f\u8b1d\u60a8\u7684\u9023\u7f72</title>\n'])
+    extend_([u'</head>\n'])
+    extend_([u'\n'])
+    extend_([u'<body id="home">\n'])
+    extend_([u'    <div>\u8cc7\u6599\u932f\u8aa4\uff0c\u7169\u8acb\u91cd\u65b0\u586b\u5beb\u3002<a href="javascript:javascript:history.go(-1)">\u56de\u4e0a\u4e00\u9801</a></div>\n'])
+    extend_([u'</body>\n'])
+    extend_([u'</html>\n'])
+    extend_([u'\n'])
+
+    return self
+
+error = CompiledTemplate(error, 'templates\\error.html')
+join_ = error._join; escape_ = error._escape
+
+# coding: utf-8
 def signlist (signlist):
     __lineoffset__ = -4
     loop = ForLoop()

@@ -1,4 +1,5 @@
 #std
+import sys
 import logging
 from datetime import datetime,date
 #gae
@@ -30,14 +31,26 @@ class index:
     def POST(self):
         i = web.input()
         counter = increment("sign", 0)+1
-        obj = Sign(
+
+        if i.name == "":
+            logging.error("name field should not be empty")
+            render = web.template.render('templates')
+            return render.error()
+
+        try:
+            obj = Sign(
                 count = counter,
                 date  = datetime.utcnow().date(),
                 name  = i.name,
                 birth = date(int(i.birthyear), int(i.birthmonth), int(i.birthdate)),
                 addr  = i.addr,
                 phone = i.phone)
-        obj.put()
+            obj.put()
+        except:
+            logging.error("Error happens when write to db " + str(sys.exc_info()[0]))
+            render = web.template.render('templates')
+            return render.error()
+
         counter = increment("sign", 1)
         render = web.template.render('templates')
         return render.thanks(i.name)

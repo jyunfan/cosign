@@ -30,7 +30,7 @@ class download:
         #   leading zeros in phone number
         signlist = [u'姓名,出生年月日,地址,電話']
         for s in tmpsignlist:
-            signlist.append('%s,%s,%s,="%s"' % (s.name, s.birth, s.addr, s.phone))
+            signlist.append('"%s",%s,"%s",="%s"' % (s.name, s.birth, s.addr, s.phone))
         csv = "\n".join(signlist)
 
         web.header('Content-type','text/csv; charset=utf-8')
